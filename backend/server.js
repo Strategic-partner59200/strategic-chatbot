@@ -12,7 +12,7 @@ dotenv.config();
 
 // Middlewares
 app.use(cors({
-    origin: ["https://strategicdash.onrender.com", "https://strategic-chatbot-fn3c.onrender.com"],
+    origin: ["https://strategic-dash.vercel.app", "https://strategic-chatbot.vercel.app"],
     credentials: true,
 }));
 
