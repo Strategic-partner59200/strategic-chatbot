@@ -28,8 +28,8 @@ const Hero = () => {
               </span>
               Client avec
               <span className="relative inline-block">
-                &nbsp;<span className="text-[#77be89]">Leads</span>Generation.
-                <span className="text-[#77be89]">AI</span>
+                &nbsp;<span className="text-[#77be89]">Strategic</span>{" "}
+                <span className="text-black">partner</span>
                 <img
                   src={curve}
                   className="absolute top-full left-0 w-full xl:-mt-2"
@@ -37,7 +37,7 @@ const Hero = () => {
                 />
               </span>
             </h1>
-            <p className="text-black lg:block md:block hidden text-sm sm:text-md md:text-lg mb-4 leading-relaxed">
+            {/* <p className="text-black lg:block md:block hidden text-sm sm:text-md md:text-lg mb-4 leading-relaxed">
               Libérez le pouvoir de l'IA avec{" "}
               <strong className="text-[#77be89]">LeadsGeneration.AI</strong>{" "}
               <span className="hidden lg:inline">
@@ -48,10 +48,10 @@ const Hero = () => {
                 <br />
               </span>
               votre service client grâce à notre chatbot intelligent.
-            </p>
+            </p> */}
               <p className="text-black mb-6 leading-relaxed lg:px-[0px] px-[20px] flex-col text-start">
                 Libérez le pouvoir de l'IA avec{" "}
-                <strong className="text-[#77be89]">LeadsGeneration.AI</strong>{" "}
+                <strong className="text-[#77be89]">Strategic partner,</strong>{" "}
                 Améliorez votre expérience utilisateur et optimisez votre
                 service client grâce à notre chatbot intelligent.
               </p>
