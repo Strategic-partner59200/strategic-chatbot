@@ -206,10 +206,14 @@ const Header = () => {
       }`}
     >
       <div className="flex items-center max-lg:py-2 px-2">
-        <div className="flex items-center" href="/">
-        <img src={logo} alt="logo" 
- className="h-auto max-h-32 sm:max-h-20 md:max-h-24 lg:max-h-28 xl:max-h-32 w-auto"
-          />
+        <div className="flex items-center">
+          <a href="/">
+            <img
+              src={logo}
+              alt="logo"
+              className="h-auto max-h-32 sm:max-h-20 md:max-h-24 lg:max-h-28 xl:max-h-32 w-auto"
+            />
+          </a>
         </div>
 
         {/* Navigation Menu */}
@@ -265,19 +269,19 @@ const Header = () => {
         </nav>
 
         {/* Planifier button */}
-      <div className="mr-4">
-      <Button
-          onClick={handleRedirect}
-          className="bg-[#77be89] text-white font-bold hover:text-black text-md rounded-lg mr-4 items-center hover:bg-[#5ea76c] transition hidden lg:flex"
-        >
-          <span className="text-[12px]">Planifier un rendez-vous</span>
-          <FontAwesomeIcon
-            icon={faCalendarAlt}
-            style={{ fontSize: "20px" }}
-            className="ml-2"
-          />
-        </Button>
-      </div>
+        <div className="mr-4">
+          <Button
+            onClick={handleRedirect}
+            className="bg-[#77be89] text-white font-bold hover:text-black text-md rounded-lg mr-4 items-center hover:bg-[#5ea76c] transition hidden lg:flex"
+          >
+            <span className="text-[12px]">Planifier un rendez-vous</span>
+            <FontAwesomeIcon
+              icon={faCalendarAlt}
+              style={{ fontSize: "20px" }}
+              className="ml-2"
+            />
+          </Button>
+        </div>
 
         {/* Hamburger Menu Button */}
         <Button
