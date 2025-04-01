@@ -13,7 +13,7 @@ const Footer = () => {
         </span>
         </p> */}
 <p className="caption text-n-4 lg:block block lg:text-md mr-6">
-  Copyright © {new Date().getFullYear()} LeadsGenerationAI.
+  Copyright © {new Date().getFullYear()} Strategic partner.
   <span className="block sm:inline text-center sm:ml-2">
     Tous les droits sont réservés.
   </span>
