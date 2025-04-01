@@ -163,20 +163,20 @@ export const categories = {
 
 export  const faqData = [
     {
-      question: "Qu'est ce que LeadsGeneration.AI ?",
+      question: "Qu'est ce que Strategic partner ?",
       answer:
-        "LeadsGeneration.AI vous aide à construire un chatbot IA spécialisé aussi intelligent que ChatGPT pour mieux servir vos clients. Aucune c programmation n'est requise pour créer un chatbot sur votre site web. Cela prend environ 5 minutes pour voir un chatbot en fonctionnement.",
+        "Strategic partner vous aide à construire un chatbot IA spécialisé aussi intelligent que ChatGPT pour mieux servir vos clients. Aucune c programmation n'est requise pour créer un chatbot sur votre site web. Cela prend environ 5 minutes pour voir un chatbot en fonctionnement.",
     },
     {
       question: "Comment ça fonctionne ?",
       answer:
-        "Le chatbot Leadsgeneration.AI s'adapte à toutes les données que vous fournissez, qu'elles proviennent d'un site web, de documents PDF, de contenu texte, de fichiers Word, Excel ou de vos données FAQ. Le produit final est un chatbot aussi intelligent que ChatGPT qui comprend parfaitement le fonctionnement de votre entreprise et peut en parler aux utilisateurs en votre nom.",
+        "Le chatbot s'adapte à toutes les données que vous fournissez, qu'elles proviennent d'un site web, de documents PDF, de contenu texte, de fichiers Word, Excel ou de vos données FAQ. Le produit final est un chatbot aussi intelligent que ChatGPT qui comprend parfaitement le fonctionnement de votre entreprise et peut en parler aux utilisateurs en votre nom.",
     },
     {
       question:
         "J'ai besoin d'une fonctionnalité que vous n'avez pas, cela m'aidera dans mon activité ou mon cas d'utilisation, pouvez-vous la développer ?",
       answer:
-        "Leadsgeneration.AI repond a toute vos demandes de personnalisation. Vous pouvez utiliser le formulaire de contact pour envoyer les détails sur votre cas d'utilisation, vos besoins professionnels, et discutons de voter projet.",
+        "Strategic partner repond a toute vos demandes de personnalisation. Vous pouvez utiliser le formulaire de contact pour envoyer les détails sur votre cas d'utilisation, vos besoins professionnels, et discutons de voter projet.",
     },
     {
       question: "Comment puis-je intégrer le chatbot sur mon site web ?",
