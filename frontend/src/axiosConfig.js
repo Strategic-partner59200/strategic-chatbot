@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://dash-botgenerai.onrender.com',
+    baseURL: 'https://strategicdash.onrender.com',
     headers: {
         'Content-Type': 'application/json',
     },
