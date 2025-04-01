@@ -7,7 +7,7 @@ import heroai from "../../src/assets/heroai.png";
 const Hero = () => {
   return (
     <Section
-      className="pt-8 md:pt-20 md:px-2"
+      className="pt-16 md:pt-32 md:px-2"
       crosses
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings

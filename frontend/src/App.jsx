@@ -24,8 +24,8 @@ axios.defaults.withCredentials = true;
 
 const App = () => {
   return (
-    <div className="pt-[4.75rem] lg:pt-[0.25rem] overflow-hidden">
-      <Header />
+    <div className="pt-[6.75rem] lg:pt-[1rem] overflow-hidden">
+   <Header />
       <Routes>
         <Route
           path="/"

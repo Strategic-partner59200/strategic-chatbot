@@ -78,7 +78,7 @@ const Contact = () => {
                 Adresse
               </h5>
               <p className="lg:text-lg text-md text-gray-700">
-                123 Rue de l'Innovation, Paris, France
+              99c boulevard Constantin Descat, 59200 Tourcoing, France
               </p>
             </div>
             <div className="flex flex-col">
@@ -86,7 +86,7 @@ const Contact = () => {
                 Téléphone
               </h5>
               <p className="lg:text-lg text-md text-gray-700">
-                +33 1 23 45 67 89
+              +33 6 10 08 33 86
               </p>
             </div>
             <div className="flex flex-col">
@@ -94,7 +94,7 @@ const Contact = () => {
                 Email
               </h5>
               <p className="lg:text-lg text-md text-gray-700">
-                botgeneration.ai@gmail.com
+                strategic.partnerfrance@gmail.com
               </p>
             </div>
           </div>

@@ -1,3 +1,45 @@
+// import SectionSvg from "../assets/svg/SectionSvg";
+
+// const Section = ({
+//   className,
+//   id,
+//   crosses,
+//   crossesOffset,
+//   customPaddings,
+//   children,
+// }) => {
+//   return (
+//     <div
+//       id={id}
+//       className={`
+//       relative 
+//       ${
+//         customPaddings ||
+//         `py-10 lg:py-6 xl:py-8 ${crosses ? "lg:py-16 xl:py-20" : ""}`
+//       } 
+//       ${className || ""}`}
+//     >
+//       {children}
+
+//       <div className="hidden absolute top-0 left-5 w-0.25 h-full bg-stroke-1 pointer-events-none md:block lg:left-7.5 xl:left-10" />
+//       <div className="hidden absolute top-0 right-5 w-0.25 h-full bg-stroke-1 pointer-events-none md:block lg:right-7.5 xl:right-10" />
+
+//       {crosses && (
+//         <>
+//           <div
+//             className={`hidden absolute top-0 left-7.5 right-7.5 h-0.25 bg-stroke-1 ${
+//               crossesOffset && crossesOffset
+//             } pointer-events-none lg:block xl:left-10 right-10`}
+//           />
+//           <SectionSvg crossesOffset={crossesOffset} />
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Section;
+
 import SectionSvg from "../assets/svg/SectionSvg";
 
 const Section = ({
@@ -11,8 +53,7 @@ const Section = ({
   return (
     <div
       id={id}
-      className={`
-      relative 
+      className={`relative 
       ${
         customPaddings ||
         `py-10 lg:py-6 xl:py-8 ${crosses ? "lg:py-16 xl:py-20" : ""}`
@@ -21,16 +62,19 @@ const Section = ({
     >
       {children}
 
-      <div className="hidden absolute top-0 left-5 w-0.25 h-full bg-stroke-1 pointer-events-none md:block lg:left-7.5 xl:left-10" />
-      <div className="hidden absolute top-0 right-5 w-0.25 h-full bg-stroke-1 pointer-events-none md:block lg:right-7.5 xl:right-10" />
+      {/* Left border - visible on all devices */}
+      <div className="absolute top-0 left-2 w-0.25 h-full bg-stroke-1 pointer-events-none block lg:left-7.5 xl:left-10" />
+
+      {/* Right border - visible on all devices */}
+      <div className="absolute top-0 right-2 w-0.25 h-full bg-stroke-1 pointer-events-none block lg:right-7.5 xl:right-10" />
 
       {crosses && (
         <>
+          {/* Horizontal bar - visible on all devices */}
           <div
-            className={`hidden absolute top-0 left-7.5 right-7.5 h-0.25 bg-stroke-1 ${
-              crossesOffset && crossesOffset
-            } pointer-events-none lg:block xl:left-10 right-10`}
+            className={`absolute top-0 left-7  h-0.25 bg-stroke-1 pointer-events-none lg:block xl:left-10 right-10 ${crossesOffset}`}
           />
+          {/* Cross design - visible on larger screens */}
           <SectionSvg crossesOffset={crossesOffset} />
         </>
       )}
