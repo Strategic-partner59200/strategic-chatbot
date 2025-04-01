@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
     <Section className="lg:mt-24 px-6 lg:px-20 py-10 bg-gray-50 text-gray-800">
       <h1 className="text-2xl underline font-bold text-center mb-6 text-black">
-        Politique de Confidentialité de Botgeneration.ia
+        Politique de Confidentialité de Strategic partner
       </h1>
       <p className="text-center text-gray-600 mb-8">
         <strong>Dernière mise à jour :</strong> 09-12-2024
@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
 
       <div className="space-y-6 leading-relaxed">
         <p>
-          Chez <span className="font-semibold text-black">Botgeneration.ia</span>, la protection de vos données personnelles est une priorité. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos informations personnelles lorsque vous utilisez nos services de création de chatbots personnalisés en scénarios et en intelligence artificielle.
+          Chez <span className="font-semibold text-black">Strategic partner</span>, la protection de vos données personnelles est une priorité. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos informations personnelles lorsque vous utilisez nos services de création de chatbots personnalisés en scénarios et en intelligence artificielle.
         </p>
         <p>
           En accédant ou en utilisant notre site, vous acceptez la collecte et l’utilisation de vos données personnelles conformément à cette politique. Si vous n'êtes pas d'accord avec cette politique, vous devez cesser d’utiliser nos services.
@@ -151,10 +151,10 @@ const PrivacyPolicy = () => {
         <p className="text-gray-700">
         Si vous avez des questions concernant cette politique de confidentialité ou la manière dont nous traitons vos données personnelles, n'hésitez pas à nous contacter à l'adresse suivante :
         <ul className="list-disc list-inside space-y-2 pl-4 text-gray-700 mt-2">
-          <li><span className='text-black font-semibold'>Adresse : </span> 123 rue de la Liberté, 75000 Paris</li>
+          <li><span className='text-black font-semibold'>Adresse : </span> 99c boulevard Constantin Descat, 59200 Tourcoing, France</li>
           <li><span className='text-black font-semibold'>E-mail : </span> 
-          <a href="mailto:Botgeneration.ia@gmail.com" className="text-gray-700  hover:underline hover:text-gray-900">
-           Botgeneration.ia@gmail.com
+          <a href="mailto:strategic.partnerfrance@gmail.com" className="text-gray-700  hover:underline hover:text-gray-900">
+          strategic.partnerfrance@gmail.com
           </a>
             </li>
         </ul>
