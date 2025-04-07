@@ -11,7 +11,7 @@ import { sendChatData } from "../api/sendChatData";
 const ChatbotDemo = () => {
   const chatContainerRef = useRef(null);
   const [messages, setMessages] = useState([]);
-  const [currentScenario, setCurrentScenario] = useState("initial");
+  const [currentScenario, setCurrentScenario] = useState("besoin");
   const [userInfo, setUserInfo] = useState({});
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -75,7 +75,7 @@ useEffect(() => {
       { text: userResponse, sender: "user" },
     ]);
 
-    if (currentScenario === "request_email") {
+    if (currentScenario === "email") {
       if (!isValidEmail(userResponse)) {
         scenarios[currentScenario].invalidResponse.forEach((message) => {
           displayMessageWithTypingIndicator(message, "bot");
@@ -92,7 +92,7 @@ useEffect(() => {
         }));
         return;
       }
-    } else if (currentScenario === "request_phone") {
+    } else if (currentScenario === "phone") {
       if (!isValidFrenchPhone(userResponse)) {
         scenarios[currentScenario].invalidResponse.forEach((message) => {
           displayMessageWithTypingIndicator(message, "bot");
@@ -112,7 +112,7 @@ useEffect(() => {
 
     const nextScenario = scenarios[currentScenario].next;
 
-    if (currentScenario === "request_name") {
+    if (currentScenario === "nom") {
       setTimeout(() => {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse(userResponse),
@@ -127,7 +127,7 @@ useEffect(() => {
         ...prevUserInfo,
         [scenarios[currentScenario].inputType]: "",
       }));
-    } else if ((currentScenario === "request_lastname")) {
+    } else if ((currentScenario === "prénom")) {
        setTimeout(() => {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
@@ -143,7 +143,7 @@ useEffect(() => {
         [scenarios[currentScenario].inputType]: "",
       }));
       setCurrentScenario(nextScenario)
-    } else if (currentScenario === "request_email") {
+    } else if (currentScenario === "email") {
       displayMessageWithTypingIndicator(
         scenarios[nextScenario].question,
         "bot"
@@ -153,7 +153,7 @@ useEffect(() => {
         [scenarios[currentScenario].inputType]: "",
       }));
       // setCurrentScenario(nextScenario)
-    } else if (currentScenario === "request_add_email") {
+    } else if (currentScenario === "email1") {
       setTimeout(() => {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
@@ -166,7 +166,7 @@ useEffect(() => {
         );
         setCurrentScenario(nextScenario);
       }, 4000);
-    } else if (currentScenario === "request_phone") {
+    } else if (currentScenario === "phone") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -282,7 +282,7 @@ const handleAISubmit = async () => {
         );
         setCurrentScenario(nextScenario);
       }, 3000);
-    }  else if (nextScenario === "verification_phone") {
+    }  else if (nextScenario === "phone") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -488,9 +488,9 @@ const displaycardcourse = () => {
       displaycardcourse();
       // setTimeout(() => {
       // }, 3000);
-        displayMessageLineByLine(scenarios.initial.question, "bot");
+        displayMessageLineByLine(scenarios.besoin.question, "bot");
 
-        setCurrentScenario("initial");
+        setCurrentScenario("besoin");
         setIsTyping(false);
     } else if (!isChatVisible) {
       setTimeout(() => {
@@ -506,15 +506,15 @@ const displaycardcourse = () => {
     setChatVisible(false);
   };
 
-  const handleInitialMessage = () => {
-    if (isFirstVisit) {
-      displayMessageWithTypingIndicator(
-        "Bonjour 👋, besoin d'aide ? 😃",
-        "bot"
-      );
-      setIsFirstVisit(false); // Prevent it from showing again
-    }
-  };
+  // const handleInitialMessage = () => {
+  //   if (isFirstVisit) {
+  //     displayMessageWithTypingIndicator(
+  //       "Bonjour 👋, besoin d'aide ? 😃",
+  //       "bot"
+  //     );
+  //     setIsFirstVisit(false); // Prevent it from showing again
+  //   }
+  // };
 
   useEffect(() => {
     const visited = localStorage.getItem("hasVisited");
@@ -524,11 +524,11 @@ const displaycardcourse = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isChatVisible) {
-      handleInitialMessage();
-    }
-  }, [isChatVisible]);
+  // useEffect(() => {
+  //   if (isChatVisible) {
+  //     handleInitialMessage();
+  //   }
+  // }, [isChatVisible]);
 
   return (
     <div>
@@ -603,7 +603,7 @@ const displaycardcourse = () => {
               <img src={ai} alt="BotLogo" className="w-10 bg-gray-900 items-center justify-center rounded-full object-contain h-10" />
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold">LeadsGenerationAI</span>
+                  <span className="text-sm font-semibold">Strategic partner</span>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
                 <p className="text-sm text-gray-100">

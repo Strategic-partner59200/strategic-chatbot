@@ -151,6 +151,110 @@ export const routes = [
   }
 ]
 
+export const scenarios = {
+  besoin: {
+    question: (
+      <div>
+        <h1>👋 Bienvenue sur le chatbot de Strategic partner!</h1>
+        <p>Je suis Alex 🤖, votre assistant intelligent. Que puis-je faire pour vous ?</p>
+      </div>
+    ),
+    options: [
+      { label: "Demande de renseignements 🔍", next: "demande" },
+      { label: "Etre rappeler 📞", next: "status" },
+    ],
+    botResponse: "D'accord, allons-y ! 😊",
+  },
+  demande: {
+    question: "Pouvez-vous préciser votre demande de renseignements ?",
+    options: [
+      { label: "Produits et services", next: "status" },
+      { label: "Support technique", next: "status" },
+      { label: "Tarifs", next: "status" },
+      { label: "Autre", next: "status" },
+  
+    ],
+    botResponse:
+      "Merci pour votre demande ! Pouvez-vous suivre les demandes suivantes pour que nous puissions vous contacter ? 😊"
+  },
+  status: {
+    question: "Pouvez-vous m'indiquer votre type d'utilisateur ? (e.g., Entreprise, Auto-entrepreneur, PME...)",
+    options: [
+      { label: "Auto entrepreneur", next: "prénom" },
+      { label: "PME", next: "prénom" },
+      { label: "Artisan", next: "prénom" },
+      { label: "Autre", next: "prénom" },
+    
+      
+    ],
+    botResponse: "Merci pour votre réponse ! 😊",
+  },
+  prénom: {
+    question: "Peux-tu me donner ton prenom, s’il te plaît ?",
+    botResponse: "D'accord, continuons !",
+    inputType: "lastname",
+    next: "nom",
+  },
+    nom: {
+    question: "Peux-tu me donner ton nom, s’il te plaît ?",
+    botResponse: (lastname) => `Merci, ${lastname} ! D'accord, continuons !`,
+    inputType: "name",
+    next: "email",
+  },
+
+  email: {
+    question: "S'il te plaît, entre ton email ci-dessous.",
+    botResponse: "Merci pour l'information 📧",
+    inputType: "email",
+    next: "verification_email",
+    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
+  },
+  email1: { 
+    question: "Peux-tu me donner ton correct email, s’il te plaît ?",
+    botResponse: "Merci pour l'information 📧",
+    inputType: "email",
+    next: "request_phone",
+    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
+  },
+  verification_email: {
+    question: "Est-ce que l'email 📧 est correct ?",
+    options: [
+      {label: "Oui", next: "phone"},
+      {label: "Non", next: "email1"}
+    ],
+    botResponse: "Merci pour l'information 📧",
+  },
+  verification_phone: {
+    question: "Est-ce que le numéro de téléphone 📱 est correct ?",
+    options: [
+      {label: "Oui", next: "final_response"},
+      {label: "Non", next: "phone"}
+    ],
+    botResponse: "Merci pour l'information 📧",
+  },
+  
+  phone: {
+    question: 'S\'il te plaît, entre ton numéro de téléphone 📱 ci-dessous.',
+    botResponse: "Parfait!",
+    inputType: "phone",
+    next: "verification_phone",
+    invalidResponse: ["Désolé ! le numéro de téléphone que tu viens de rentrer ne semble pas être valide !."],
+  },
+ 
+
+  final_response: {
+    question: "Nous vous contacterons bientôt! Et Merci d'avoir pris le temps de discuter avec moi, À bientôt ! 😊",
+    options: [],
+    next: "",
+      botResponse:
+        "Merci d'avoir pris le temps de discuter avec moi, À bientôt ! 😊",
+  },
+
+ 
+};
+
+
+
 
 // export const scenarios = {
 //   initial: {
@@ -844,105 +948,3 @@ export const routes = [
   
 // };
 // verifier les informations recquises à integrer au dashboard pour la bonne qualification du contact
-export const scenarios = {
-  initial: {
-    question: (
-      <div>
-        <h1>👋 Bienvenue sur le chatbot BotGeneration.Ai!</h1>
-        <p>Je suis Alex 🤖, votre assistant intelligent. Que puis-je faire pour vous ?</p>
-      </div>
-    ),
-    options: [
-      { label: "Demande de renseignements 🔍", next: "information_request" },
-      { label: "Etre rappeler 📞", next: "request_who" },
-    ],
-    botResponse: "D'accord, allons-y ! 😊",
-  },
-  information_request: {
-    question: "Pouvez-vous préciser votre demande de renseignements ?",
-    options: [
-      { label: "Produits et services", next: "request_who" },
-      { label: "Support technique", next: "request_who" },
-      { label: "Tarifs", next: "request_who" },
-      { label: "Autre", next: "request_who" },
-  
-    ],
-    botResponse:
-      "Merci pour votre demande ! Pouvez-vous suivre les demandes suivantes pour que nous puissions vous contacter ? 😊"
-  },
-  request_who: {
-    question: "Pouvez-vous m'indiquer votre type d'utilisateur ? (e.g., Entreprise, Auto-entrepreneur, PME...)",
-    options: [
-      { label: "Auto entrepreneur", next: "request_lastname" },
-      { label: "PME", next: "request_lastname" },
-      { label: "Artisan", next: "request_lastname" },
-      { label: "Autre", next: "request_lastname" },
-    
-      
-    ],
-    botResponse: "Merci pour votre réponse ! 😊",
-  },
-  request_lastname: {
-    question: "Peux-tu me donner ton prenom, s’il te plaît ?",
-    botResponse: "D'accord, continuons !",
-    inputType: "lastname",
-    next: "request_name",
-  },
-    request_name: {
-    question: "Peux-tu me donner ton nom, s’il te plaît ?",
-    botResponse: (lastname) => `Merci, ${lastname} ! D'accord, continuons !`,
-    inputType: "name",
-    next: "request_email",
-  },
-
-  request_email: {
-    question: "S'il te plaît, entre ton email ci-dessous.",
-    botResponse: "Merci pour l'information 📧",
-    inputType: "email",
-    next: "verification_email",
-    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
-  },
-  request_add_email: { 
-    question: "Peux-tu me donner ton correct email, s’il te plaît ?",
-    botResponse: "Merci pour l'information 📧",
-    inputType: "email",
-    next: "request_phone",
-    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
-  },
-  verification_email: {
-    question: "Est-ce que l'email 📧 est correct ?",
-    options: [
-      {label: "Oui", next: "request_phone"},
-      {label: "Non", next: "request_add_email"}
-    ],
-    botResponse: "Merci pour l'information 📧",
-  },
-  verification_phone: {
-    question: "Est-ce que le numéro de téléphone 📱 est correct ?",
-    options: [
-      {label: "Oui", next: "final_response"},
-      {label: "Non", next: "request_phone"}
-    ],
-    botResponse: "Merci pour l'information 📧",
-  },
-  
-  request_phone: {
-    question: 'S\'il te plaît, entre ton numéro de téléphone 📱 ci-dessous.',
-    botResponse: "Parfait!",
-    inputType: "phone",
-    next: "verification_phone",
-    invalidResponse: ["Désolé ! le numéro de téléphone que tu viens de rentrer ne semble pas être valide !."],
-  },
- 
-
-  final_response: {
-    question: "Nous vous contacterons bientôt! Et Merci d'avoir pris le temps de discuter avec moi, À bientôt ! 😊",
-    options: [],
-    next: "",
-      botResponse:
-        "Merci d'avoir pris le temps de discuter avec moi, À bientôt ! 😊",
-  },
-
- 
-};
-
