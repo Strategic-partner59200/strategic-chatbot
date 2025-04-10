@@ -11,7 +11,7 @@ const openai = new OpenAI({
 });
 
 // Base URL to scrape
-const TARGET_URL = "https://www.koutquekout.com";
+const TARGET_URL = "https://strategic-chatbot.vercel.app";
 
 // Scrape a given path on the target website
 async function scrapeWebsite(path = "") {
@@ -152,7 +152,7 @@ et donnez une réponse courte et professionnelle basée sur le contenu du site w
         "[INFO] Limit reached for general questions. No response will be given."
       );
       response.message =
-        "Je suis ici pour vous aider à en savoir plus sur LeadsGenerationAI. Faites-moi savoir si vous souhaitez de l'aide pour planifier une démo, découvrir notre produit ou vérifier notre contact ou remplir le formulaire !";
+        "Je suis ici pour vous aider à en savoir plus sur Strategic Partner. Pour aller plus loin, vous pouvez consulter notre page de contact, remplir le formulaire ou planifier un rendez-vous avec notre équipe."
     }
 
     // Send the final response
