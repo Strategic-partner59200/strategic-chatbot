@@ -129,12 +129,12 @@ const gptPrompt = `En tant que représentant de Strategic Partner, répondez à 
             error.message
           );
           response.message =
-            "Je suis ici pour répondre à vos questions concernant notre website. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
+            "Je suis ici pour vous aider à en savoir plus sur Strategic Partner. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
         }
       } else {
         console.warn("[WARNING] No content scraped from the website.");
         response.message =
-          "Je suis ici pour répondre à vos questions concernant notre website. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
+          "Je suis ici pour vous aider à en savoir plus sur Strategic Partner. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
       }
     } else if (generalQuestionCount < 2) {
       console.log("[INFO] General input detected. Responding directly...");
