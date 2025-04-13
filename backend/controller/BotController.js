@@ -2,6 +2,7 @@ const { OpenAI } = require("openai"); // Import OpenAI SDK
 // const puppeteer = require("puppeteer"); // Import Puppeteer for scraping dynamic content
 const dotenv = require("dotenv");
 const cheerio = require("cheerio");
+const axios = require("axios");
 
 // Load environment variables
 dotenv.config();
