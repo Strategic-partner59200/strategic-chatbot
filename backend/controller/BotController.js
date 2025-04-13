@@ -31,7 +31,7 @@ async function scrapeWebsite(path = "") {
         "--single-process",
       ],
       executablePath: puppeteer.executablePath(), // Ensure Puppeteer knows where to find the browser
-      userDataDir: path.join(process.env.PUPPETEER_CACHE_DIR || '/tmp', '.puppeteer_cache'), 
+      userDataDir: process.env.PUPPETEER_CACHE_DIR, 
       headless: true,
     });
     const page = await browser.newPage();
