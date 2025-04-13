@@ -23,13 +23,16 @@ async function scrapeWebsite(path = "") {
     console.log(`[INFO] Starting to scrape URL: ${url}`);
 
     const browser = await puppeteer.launch({
-      headless: "new",
+      // headless: "new",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--single-process",
       ],
+      executablePath: puppeteer.executablePath(), // Ensure Puppeteer knows where to find the browser
+      userDataDir: path.join(process.env.PUPPETEER_CACHE_DIR || '/tmp', '.puppeteer_cache'), 
+      headless: true,
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
