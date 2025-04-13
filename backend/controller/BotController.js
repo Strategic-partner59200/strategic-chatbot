@@ -4,7 +4,14 @@ const dotenv = require("dotenv");
 // const cheerio = require("cheerio");
 // const axios = require("axios");
 
+const fs = require('fs');
+const browserPath = '/tmp/puppeteer_cache/chrome/linux-131.0.6778.204/chrome-linux64/chrome';
 
+if (fs.existsSync(browserPath)) {
+  console.log(`Browser found at path: ${browserPath}`);
+} else {
+  console.error(`Browser not found at path: ${browserPath}`);
+}
 // Load environment variables
 dotenv.config();
 
@@ -30,7 +37,7 @@ async function scrapeWebsite(path = "") {
         "--disable-dev-shm-usage",
         "--single-process",
       ],
-      executablePath: '/tmp/puppeteer_cache/chrome/linux-131.0.6778.204/chrome-linux64/chrome',
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/tmp/puppeteer_cache/chrome/linux-131.0.6778.204/chrome-linux64/chrome',
       userDataDir: process.env.PUPPETEER_CACHE_DIR, 
       headless: true,
     });
