@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 // const cheerio = require("cheerio");
 // const axios = require("axios");
 
+
 // Load environment variables
 dotenv.config();
 
@@ -22,7 +23,7 @@ async function scrapeWebsite(path = "") {
     console.log(`[INFO] Starting to scrape URL: ${url}`);
 
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: "new",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -44,6 +45,9 @@ async function scrapeWebsite(path = "") {
     return null;
   }
 }
+
+
+
 
 
 
@@ -125,12 +129,12 @@ const gptPrompt = `En tant que représentant de Strategic Partner, répondez à 
             error.message
           );
           response.message =
-            "Désolé, je n'ai pas pu générer une réponse pour votre question.";
+            "Je suis ici pour répondre à vos questions concernant notre website. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
         }
       } else {
         console.warn("[WARNING] No content scraped from the website.");
         response.message =
-          "Désolé, je n'ai pas pu récupérer les informations nécessaires.";
+          "Je suis ici pour répondre à vos questions concernant notre website. Si vous avez des questions sur notre service, n'hésitez pas à me les poser !";
       }
     } else if (generalQuestionCount < 2) {
       console.log("[INFO] General input detected. Responding directly...");
