@@ -1,6 +1,7 @@
 const { OpenAI } = require("openai"); // Import OpenAI SDK
-const puppeteer = require("puppeteer"); // Import Puppeteer for scraping dynamic content
+// const puppeteer = require("puppeteer"); // Import Puppeteer for scraping dynamic content
 const dotenv = require("dotenv");
+const cheerio = require("cheerio");
 
 // Load environment variables
 dotenv.config();
@@ -14,31 +15,66 @@ const openai = new OpenAI({
 const TARGET_URL = "https://strategic-chatbot.vercel.app";
 
 // Scrape a given path on the target website
+// async function scrapeWebsite(path = "") {
+//   try {
+//     const url = `${TARGET_URL}${path}`;
+//     console.log(`[INFO] Starting to scrape URL: ${url}`);
+
+//     const browser = await puppeteer.launch({
+//       headless: true,
+//       args: [
+//         "--no-sandbox",
+//         "--disable-setuid-sandbox",
+//         "--disable-dev-shm-usage",
+//         "--single-process",
+//       ],
+//     });
+//     const page = await browser.newPage();
+//     await page.goto(url, { waitUntil: "networkidle2" });
+
+//     // Extract all text content from the page
+//     const content = await page.evaluate(() => document.body.innerText.trim());
+
+//     await browser.close();
+//     console.log(`[INFO] Scraping completed for URL: ${url}`);
+//     return content;
+//   } catch (error) {
+//     console.error(`[ERROR] Failed to scrape URL (${path}): ${error.message}`);
+//     return null;
+//   }
+// }
+
+// Scrape a given path on the target website using Cheerio
 async function scrapeWebsite(path = "") {
   try {
     const url = `${TARGET_URL}${path}`;
-    console.log(`[INFO] Starting to scrape URL: ${url}`);
+    console.log(`[INFO] Starting to scrape URL with Cheerio: ${url}`);
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--single-process",
-      ],
+    // Fetch the page with axios
+    const response = await axios.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      },
+      timeout: 10000 // 10 second timeout
     });
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "networkidle2" });
 
-    // Extract all text content from the page
-    const content = await page.evaluate(() => document.body.innerText.trim());
+    // Load HTML into Cheerio
+    const $ = cheerio.load(response.data);
 
-    await browser.close();
+    // Remove unwanted elements
+    $('script, style, noscript, iframe, head, nav, footer').remove();
+
+    // Get clean text content
+    let content = $('body').text()
+      .replace(/\s+/g, ' ') // Collapse whitespace
+      .replace(/[\t\n\r]+/g, ' ') // Replace tabs and newlines
+      .trim();
+
     console.log(`[INFO] Scraping completed for URL: ${url}`);
     return content;
   } catch (error) {
-    console.error(`[ERROR] Failed to scrape URL (${path}): ${error.message}`);
+    console.error(`[ERROR] Failed to scrape URL (${path}) with Cheerio: ${error.message}`);
     return null;
   }
 }
