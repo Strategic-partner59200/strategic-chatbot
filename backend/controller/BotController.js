@@ -37,8 +37,8 @@ async function scrapeWebsite(path = "") {
         "--disable-dev-shm-usage",
         "--single-process",
       ],
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/tmp/puppeteer_cache/chrome/linux-131.0.6778.204/chrome-linux64/chrome',
-      userDataDir: process.env.PUPPETEER_CACHE_DIR, 
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, // Let Puppeteer handle it
+      userDataDir: process.env.PUPPETEER_CACHE_DIR || "/tmp/puppeteer_cache",
       headless: true,
     });
     const page = await browser.newPage();
