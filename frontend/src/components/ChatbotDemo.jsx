@@ -21,6 +21,118 @@ const ChatbotDemo = () => {
   const [hasShownInitialMessage, setHasShownInitialMessage] = useState(false);
   const [groupedData, setGroupedData] = useState({});
   const [ads, setAds] = useState([]);
+
+
+  const handleAISubmit = async () => {
+    if (!inputValue.trim()) return; // Prevent empty submissions
+  
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { sender: "user", text: inputValue },
+    ]);
+  
+    setInputValue(""); // Clear the input field
+    setIsTyping(true); // Show typing indicator
+  
+    try {
+      const response = await axios.post("/bot", { input: inputValue });
+      console.log("Response from backend:", response.data);
+      const data = response.data;
+  
+      if (data.message) {
+        const formattedMessage = formatResponse(data.message);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            sender: "bot",
+            text: data.message,
+            htmlContent: formattedMessage, // Use formatted HTML content
+          },
+        ]);
+      } else {
+        console.warn("No message in response:", data);
+        const errorMessage = "Je suis désolé, je n'ai pas pu générer de réponse.";
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            sender: "bot",
+            text: errorMessage,
+            htmlContent: formatResponse(errorMessage)
+          }
+        ]);
+      }
+    } catch (error) {
+      console.error("Error fetching bot response:", error);
+      const errorMessage = "Une erreur s'est produite. Veuillez réessayer plus tard.";
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          sender: "bot",
+          text: errorMessage,
+          htmlContent: formatResponse(errorMessage)
+        },
+      ]);
+    } finally {
+      setIsTyping(false); // Hide typing indicator
+    }
+  };
+  
+  const formatResponse = (text) => {
+    // Convert Markdown to HTML
+    let formattedText = text;
+  
+    // First handle the dot-separated sentences
+    formattedText = formattedText.replace(/^\.(.*$)/gm, '<p class="mb-3 leading-relaxed">$1</p>');
+  
+    // Headings
+    formattedText = formattedText.replace(/^##\s+(.*$)/gm, '<h3 class="text-xl font-semibold mt-6 mb-3">$1</h3>');
+    formattedText = formattedText.replace(/^###\s+(.*$)/gm, '<h4 class="text-lg font-medium mt-4 mb-2">$1</h4>');
+  
+    // Bold text
+    formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>');
+  
+    // Lists - improved to handle contact information format
+    formattedText = formattedText.replace(/^-\s(.+?):\s(.+)$/gm, '<li class="mb-2"><span class="font-semibold">$1:</span> $2</li>');
+    formattedText = formattedText.replace(/^\s*-\s(.*$)/gm, '<li class="list-disc ml-5 mb-1">$1</li>');
+    formattedText = formattedText.replace(/^\s*\*\s(.*$)/gm, '<li class="list-disc ml-5 mb-1">$1</li>');
+  
+    // Wrap the entire list in a <ul> if we have list items
+    if (formattedText.includes('<li')) {
+      formattedText = `<ul class="space-y-2 my-3">${formattedText}</ul>`;
+    }
+  
+    // Paragraphs (only for text that isn't already wrapped in tags and doesn't start with special characters)
+    formattedText = formattedText.replace(/^(?!<[a-z]|<\/[a-z]|\.|\*|#|-)(.*$)/gm, '<p class="mb-3 leading-relaxed">$1</p>');
+  
+    // Links
+    const urlRegex = /(\bhttps?:\/\/[^\s]+)\b/g;
+    formattedText = formattedText.replace(
+      urlRegex, 
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline transition-colors">$1</a>'
+    );
+  
+    // Email links
+    const emailRegex = /(\b[\w.-]+@[\w.-]+\.\w{2,}\b)/g;
+    formattedText = formattedText.replace(
+      emailRegex,
+      '<a href="mailto:$1" class="text-blue-600 hover:text-blue-800 underline transition-colors">$1</a>'
+    );
+  
+    // Phone number links
+    const phoneRegex = /(\+\d{1,3}\s\d{1,3}\s\d{2}\s\d{2}\s\d{2})/g;
+    formattedText = formattedText.replace(
+      phoneRegex,
+      '<a href="tel:$1" class="text-blue-600 hover:text-blue-800 underline transition-colors">$1</a>'
+    );
+  
+    // Code blocks
+    formattedText = formattedText.replace(
+      /```([\s\S]*?)```/g, 
+      '<pre class="bg-gray-100 p-3 rounded-md overflow-x-auto my-2"><code>$1</code></pre>'
+    );
+  
+    return formattedText;
+  };
  
 useEffect(() => {
   const fetchAds = async () => {
@@ -202,22 +314,45 @@ useEffect(() => {
 
 //   try {
 //     const response = await axios.post("/bot", { input: inputValue });
-//     console.log("Response from backend:", response.data); // Log the response
+//     console.log("Response from backend:", response.data);
 //     const data = response.data;
 
-//     // Convert backend response to a list or structured format
 //     if (data.message) {
-//       const structuredContent = data.message
-//         .split("\n") // Split the message into lines
-//         .map((line) => `<li>${line.trim()}</li>`) // Wrap each line in <li>
-//         .join(""); // Join the list items
+//       const formattedMessage = data.message
+//         .split("\n")
+//         .filter(line => line.trim()) // Remove empty lines
+//         .map((line, index) => {
+//           // Format headings (lines ending with :)
+//           if (line.trim().endsWith(':')) {
+//             return `<h3 class="response-heading">${line.trim().replace(':', '')}</h3>`;
+//           }
+//           // Format code blocks (lines wrapped in ```)
+//           else if (line.trim().startsWith('```') && line.trim().endsWith('```')) {
+//             const codeContent = line.trim().slice(3, -3);
+//             return `<pre class="response-code">${codeContent}</pre>`;
+//           }
+//           // Format regular lines with bullet points
+//           else {
+//             return `<li class="response-item">
+//                       <span class="bullet">•</span>
+//                       <span class="response-text">${line.trim()}</span>
+//                     </li>`;
+//           }
+//         })
+//         .join("");
 
 //       setMessages((prevMessages) => [
 //         ...prevMessages,
 //         {
 //           sender: "bot",
 //           text: data.message,
-//           htmlContent: `<ul>${structuredContent}</ul>`, // Wrap list items in <ul>
+//           htmlContent: `<div class="ai-response-container">
+//                           <div class="ai-response-content">
+//                             ${formattedMessage.includes('<li') 
+//                               ? `<ul class="response-list">${formattedMessage}</ul>` 
+//                               : formattedMessage}
+//                           </div>
+//                         </div>`,
 //         },
 //       ]);
 //     } else {
@@ -226,6 +361,10 @@ useEffect(() => {
 //         {
 //           sender: "bot",
 //           text: "Je suis désolé, je n'ai pas pu générer de réponse.",
+//           htmlContent: `<div class="ai-error-message">
+//                           <div class="ai-avatar">AI</div>
+//                           <div class="error-text">Je suis désolé, je n'ai pas pu générer de réponse.</div>
+//                         </div>`
 //         },
 //       ]);
 //     }
@@ -236,96 +375,16 @@ useEffect(() => {
 //       {
 //         sender: "bot",
 //         text: "Une erreur s'est produite. Veuillez réessayer plus tard.",
+//         htmlContent: `<div class="ai-error-message">
+//                         <div class="ai-avatar">AI</div>
+//                         <div class="error-text">Une erreur s'est produite. Veuillez réessayer plus tard.</div>
+//                       </div>`
 //       },
 //     ]);
 //   } finally {
 //     setIsTyping(false); // Hide typing indicator
 //   }
 // };
-const handleAISubmit = async () => {
-  if (!inputValue.trim()) return; // Prevent empty submissions
-
-  setMessages((prevMessages) => [
-    ...prevMessages,
-    { sender: "user", text: inputValue },
-  ]);
-
-  setInputValue(""); // Clear the input field
-  setIsTyping(true); // Show typing indicator
-
-  try {
-    const response = await axios.post("/bot", { input: inputValue });
-    console.log("Response from backend:", response.data);
-    const data = response.data;
-
-    if (data.message) {
-      const formattedMessage = data.message
-        .split("\n")
-        .filter(line => line.trim()) // Remove empty lines
-        .map((line, index) => {
-          // Format headings (lines ending with :)
-          if (line.trim().endsWith(':')) {
-            return `<h3 class="response-heading">${line.trim().replace(':', '')}</h3>`;
-          }
-          // Format code blocks (lines wrapped in ```)
-          else if (line.trim().startsWith('```') && line.trim().endsWith('```')) {
-            const codeContent = line.trim().slice(3, -3);
-            return `<pre class="response-code">${codeContent}</pre>`;
-          }
-          // Format regular lines with bullet points
-          else {
-            return `<li class="response-item">
-                      <span class="bullet">•</span>
-                      <span class="response-text">${line.trim()}</span>
-                    </li>`;
-          }
-        })
-        .join("");
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          sender: "bot",
-          text: data.message,
-          htmlContent: `<div class="ai-response-container">
-                          <div class="ai-response-content">
-                            ${formattedMessage.includes('<li') 
-                              ? `<ul class="response-list">${formattedMessage}</ul>` 
-                              : formattedMessage}
-                          </div>
-                        </div>`,
-        },
-      ]);
-    } else {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          sender: "bot",
-          text: "Je suis désolé, je n'ai pas pu générer de réponse.",
-          htmlContent: `<div class="ai-error-message">
-                          <div class="ai-avatar">AI</div>
-                          <div class="error-text">Je suis désolé, je n'ai pas pu générer de réponse.</div>
-                        </div>`
-        },
-      ]);
-    }
-  } catch (error) {
-    console.error("Error fetching bot response:", error);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        sender: "bot",
-        text: "Une erreur s'est produite. Veuillez réessayer plus tard.",
-        htmlContent: `<div class="ai-error-message">
-                        <div class="ai-avatar">AI</div>
-                        <div class="error-text">Une erreur s'est produite. Veuillez réessayer plus tard.</div>
-                      </div>`
-      },
-    ]);
-  } finally {
-    setIsTyping(false); // Hide typing indicator
-  }
-};
 
 
   const displayMessageWithTypingIndicator = (message, sender) => {
