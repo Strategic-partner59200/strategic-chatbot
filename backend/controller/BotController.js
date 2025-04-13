@@ -30,7 +30,7 @@ async function scrapeWebsite(path = "") {
         "--disable-dev-shm-usage",
         "--single-process",
       ],
-      executablePath: puppeteer.executablePath(), // Ensure Puppeteer knows where to find the browser
+      executablePath: '/tmp/puppeteer_cache/chrome/linux-131.0.6778.204/chrome-linux64/chrome',
       userDataDir: process.env.PUPPETEER_CACHE_DIR, 
       headless: true,
     });
