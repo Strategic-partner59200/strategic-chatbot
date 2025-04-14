@@ -29,8 +29,7 @@ async function scrapeWebsite(path = "") {
         "--disable-dev-shm-usage",
         "--single-process",
       ],
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, // Let Puppeteer handle it
-      userDataDir: process.env.PUPPETEER_CACHE_DIR || "/tmp/puppeteer_cache",
+      userDataDir: process.env.PUPPETEER_CACHE_DIR,
       headless: true,
     });
     const page = await browser.newPage();
