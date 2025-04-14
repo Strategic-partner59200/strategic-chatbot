@@ -267,15 +267,32 @@ const displayMessageWithTypingIndicator = (message, sender) => {
       setCurrentScenario(nextScenario)
     } else if (currentScenario === "email") {
       displayMessageWithTypingIndicator(
-        scenarios[nextScenario].question,
+        scenarios[currentScenario].botResponse,
         "bot"
       );
-      setUserInfo((prevUserInfo) => ({
-        ...prevUserInfo,
-        [scenarios[currentScenario].inputType]: "",
-      }));
+      setTimeout(() => {
+        displayMessageWithTypingIndicator(
+          scenarios[nextScenario].question,
+          "bot"
+        );
+        setCurrentScenario(nextScenario);
+      }, 3000);
       // setCurrentScenario(nextScenario)
-    } else if (currentScenario === "qualification_project") {
+      
+    }else if (currentScenario === "qualification_project") {
+      displayMessageWithTypingIndicator(
+        scenarios[currentScenario].botResponse,
+        "bot"
+      );
+      setTimeout(() => {
+        displayMessageWithTypingIndicator(
+          scenarios[nextScenario].question,
+          "bot"
+        );
+        setCurrentScenario(nextScenario);
+      }, 3000);
+    }
+    else if (currentScenario === "nom_societé") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -291,18 +308,17 @@ const displayMessageWithTypingIndicator = (message, sender) => {
    
   
     else if (currentScenario === "email1") {
-      setTimeout(() => {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
-      );}, 2000)
+      );
       setTimeout(() => {
         displayMessageWithTypingIndicator(
           scenarios[nextScenario].question,
           "bot"
         );
         setCurrentScenario(nextScenario);
-      }, 4000);
+      }, 3000);
     } else if (currentScenario === "phone") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
@@ -326,104 +342,6 @@ const displayMessageWithTypingIndicator = (message, sender) => {
     sendData(currentScenario, userInfo[scenarios[currentScenario].inputType]);
   }
 
-// const handleAISubmit = async () => {
-//   if (!inputValue.trim()) return; // Prevent empty submissions
-
-//   setMessages((prevMessages) => [
-//     ...prevMessages,
-//     { sender: "user", text: inputValue },
-//   ]);
-
-//   setInputValue(""); // Clear the input field
-//   setIsTyping(true); // Show typing indicator
-
-//   try {
-//     const response = await axios.post("/bot", { input: inputValue });
-//     console.log("Response from backend:", response.data);
-//     const data = response.data;
-
-//     if (data.message) {
-//       const formattedMessage = data.message
-//         .split("\n")
-//         .filter(line => line.trim()) // Remove empty lines
-//         .map((line, index) => {
-//           // Format headings (lines ending with :)
-//           if (line.trim().endsWith(':')) {
-//             return `<h3 class="response-heading">${line.trim().replace(':', '')}</h3>`;
-//           }
-//           // Format code blocks (lines wrapped in ```)
-//           else if (line.trim().startsWith('```') && line.trim().endsWith('```')) {
-//             const codeContent = line.trim().slice(3, -3);
-//             return `<pre class="response-code">${codeContent}</pre>`;
-//           }
-//           // Format regular lines with bullet points
-//           else {
-//             return `<li class="response-item">
-//                       <span class="bullet">•</span>
-//                       <span class="response-text">${line.trim()}</span>
-//                     </li>`;
-//           }
-//         })
-//         .join("");
-
-//       setMessages((prevMessages) => [
-//         ...prevMessages,
-//         {
-//           sender: "bot",
-//           text: data.message,
-//           htmlContent: `<div class="ai-response-container">
-//                           <div class="ai-response-content">
-//                             ${formattedMessage.includes('<li') 
-//                               ? `<ul class="response-list">${formattedMessage}</ul>` 
-//                               : formattedMessage}
-//                           </div>
-//                         </div>`,
-//         },
-//       ]);
-//     } else {
-//       setMessages((prevMessages) => [
-//         ...prevMessages,
-//         {
-//           sender: "bot",
-//           text: "Je suis désolé, je n'ai pas pu générer de réponse.",
-//           htmlContent: `<div class="ai-error-message">
-//                           <div class="ai-avatar">AI</div>
-//                           <div class="error-text">Je suis désolé, je n'ai pas pu générer de réponse.</div>
-//                         </div>`
-//         },
-//       ]);
-//     }
-//   } catch (error) {
-//     console.error("Error fetching bot response:", error);
-//     setMessages((prevMessages) => [
-//       ...prevMessages,
-//       {
-//         sender: "bot",
-//         text: "Une erreur s'est produite. Veuillez réessayer plus tard.",
-//         htmlContent: `<div class="ai-error-message">
-//                         <div class="ai-avatar">AI</div>
-//                         <div class="error-text">Une erreur s'est produite. Veuillez réessayer plus tard.</div>
-//                       </div>`
-//       },
-//     ]);
-//   } finally {
-//     setIsTyping(false); // Hide typing indicator
-//   }
-// };
-
-
-  // const displayMessageWithTypingIndicator = (message, sender) => {
-    
-  //   setIsTyping(true);
-  //   setTimeout(() => {
-  //     setMessages((prevMessages) => [
-  //       ...prevMessages,
-  //       { text: message, sender },
-  //     ]);
-  //     setIsTyping(false);
-  //   }, 3000);
-  // };
- 
   
   
 
@@ -450,7 +368,7 @@ const displayMessageWithTypingIndicator = (message, sender) => {
         );
         setCurrentScenario(nextScenario);
       }, 3000);
-    }  else if (nextScenario === "phone") {
+    }   else if (nextScenario === "verification_email") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -462,7 +380,21 @@ const displayMessageWithTypingIndicator = (message, sender) => {
         );
         setCurrentScenario(nextScenario);
       }, 6000);
-    } else if (nextScenario === "budget_estimation") {
+    } 
+    else if (nextScenario === "verification_phone") {
+      displayMessageWithTypingIndicator(
+        scenarios[currentScenario].botResponse,
+        "bot"
+      );
+      setTimeout(() => {
+        displayMessageWithTypingIndicator(
+          scenarios[nextScenario].question,
+          "bot"
+        );
+        setCurrentScenario(nextScenario);
+      }, 6000);
+    } 
+     else if (nextScenario === "budget_estimation") {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -881,15 +813,15 @@ const displaycardcourse = () => {
                       placeholder={`Entrez votre ${
                         scenarios[currentScenario].inputType === "email"
                           ? "email"
-                          : scenarios[currentScenario].inputType === "name"
-                          ? "prenom"
-                          : scenarios[currentScenario].inputType === "qualification_project"
+                          : scenarios[currentScenario].inputType === "société"
+                          ? "société"
+                         : scenarios[currentScenario].inputType === "qualification_project"
                           ? "qualification_project"
                           : scenarios[currentScenario].inputType === "lastname"
                           ? 'nom'
                           : scenarios[currentScenario].inputType ===
-                            "phone (+33 xxxxxxxxx)"
-                          ? "numéro de téléphone"
+                            "phone"
+                          ? "phone"
                           : ''
                       }`}
                       value={

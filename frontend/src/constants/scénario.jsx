@@ -216,7 +216,7 @@ export const scenarios = {
   // },
   rdv_link: {
     question: "Cliquez au-desous pour choisir le moment qui vous convient le mieux ",
-    botResponse: "Parfait !",
+    botResponse: "Parfait !🙏🏻",
     options: [
       {
         label: "rendez-vous",  next: "final_response"
@@ -248,13 +248,13 @@ export const scenarios = {
     question: "Pourriez-vous me communiquer votre prénom et votre nom, s’il vous plaît ",
     botResponse: (lastname) => `Merci, ${lastname} ! D'accord, continuons !`,
     inputType: "name",
-    next: "email",
+    next: "nom_societé",
   },
   nom_societé: {
     question: "Pourriez-vous me communiquer le nom de votre société, s’il vous plaît ?",
     botResponse: "D'accord, continuons !",
-    inputType: "lastname",
-    next: "nom",
+    inputType: "société",
+    next: "email",
   },
 
   email: {
@@ -285,12 +285,12 @@ export const scenarios = {
       {label: "Oui", next: "final_response"},
       {label: "Non", next: "phone"}
     ],
-    botResponse: "Merci pour l'information 📧",
+    botResponse: "D'accord! 😊",
   },
   
   phone: {
     question: 'Entre ton numéro de téléphone 📱 ci-dessous, s’il vous plaît ?',
-    botResponse: "Hmmm D'accord!",
+    botResponse: "Hmmm D'accord! 😊",
     inputType: "phone",
     next: "verification_phone",
     invalidResponse: ["Désolé, le numéro de téléphone que vous avez saisie ne semble pas valide."]
