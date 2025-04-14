@@ -147,6 +147,16 @@ useEffect(() => {
   fetchAds();
 }, []);
   
+const displayMessageWithTypingIndicator = (message, sender) => {
+  setIsTyping(true);
+  setTimeout(() => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: message, sender },
+    ]);
+    setIsTyping(false);
+  }, 3000);
+};
 
   const isValidEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -265,7 +275,22 @@ useEffect(() => {
         [scenarios[currentScenario].inputType]: "",
       }));
       // setCurrentScenario(nextScenario)
-    } else if (currentScenario === "email1") {
+    } else if (currentScenario === "qualification_project") {
+      displayMessageWithTypingIndicator(
+        scenarios[currentScenario].botResponse,
+        "bot"
+      );
+      setTimeout(() => {
+        displayMessageWithTypingIndicator(
+          scenarios[nextScenario].question,
+          "bot"
+        );
+        setCurrentScenario(nextScenario);
+      }, 3000);
+    }
+   
+  
+    else if (currentScenario === "email1") {
       setTimeout(() => {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
@@ -387,33 +412,32 @@ useEffect(() => {
 // };
 
 
-  const displayMessageWithTypingIndicator = (message, sender) => {
-    setIsTyping(true);
-    setTimeout(() => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: message, sender },
-      ]);
-      setIsTyping(false);
-    }, 3000);
-  };
-
-  
+  // const displayMessageWithTypingIndicator = (message, sender) => {
+    
+  //   setIsTyping(true);
+  //   setTimeout(() => {
+  //     setMessages((prevMessages) => [
+  //       ...prevMessages,
+  //       { text: message, sender },
+  //     ]);
+  //     setIsTyping(false);
+  //   }, 3000);
+  // };
+ 
   
   
 
   const handleOptionClick = (selectedOptionLabel, nextScenario) => {
+    if (selectedOptionLabel.toLowerCase() === "rendez-vous") {
+      window.open("https://app.iclosed.io/e/Amar/rendez-vous", "_blank");
+    } 
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: selectedOptionLabel, sender: "user" },
     ]);
     
     if (
-      selectedOptionLabel === "Entrepreneur" ||
-      selectedOptionLabel === "Autre" ||
-      selectedOptionLabel === "Particulier" ||
-      selectedOptionLabel === "Entreprise" ||
-      selectedOptionLabel === ""
+      selectedOptionLabel === "besoin" 
     ) {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
@@ -438,7 +462,20 @@ useEffect(() => {
         );
         setCurrentScenario(nextScenario);
       }, 6000);
-    } else {
+    } else if (nextScenario === "budget_estimation") {
+      displayMessageWithTypingIndicator(
+        scenarios[currentScenario].botResponse,
+        "bot"
+      );
+      setTimeout(() => {
+        displayMessageWithTypingIndicator(
+          scenarios[nextScenario].question,
+          "bot"
+        );
+        setCurrentScenario(nextScenario);
+      }, 6000);
+    }  
+    else {
       displayMessageWithTypingIndicator(
         scenarios[currentScenario].botResponse,
         "bot"
@@ -761,42 +798,7 @@ const displaycardcourse = () => {
               className="h-[336px] w-full overflow-y-auto flex flex-col px-2"
               ref={chatContainerRef}
             >
-              {/* {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    msg.sender === "user"
-                      ? "justify-end text-xs"
-                      : "justify-start text-sm items-center"
-                  } mb-2`}
-                >
-                  {msg.sender === "bot" && (
-                    <img
-                      src={bull}
-                      alt="Bot"
-                      className="w-12 h-12  object-contain mr-2"
-                    />
-                  )}
-
-                   {msg.htmlContent ? (
-        <div
-        className={`p-2 max-w-xs text-xs rounded-lg ${
-          msg.sender === "user"
-            ? "bg-blue-500 text-white text-sm"
-            : "bg-gray-200 text-gray-800"
-        }`}
-          dangerouslySetInnerHTML={{ __html: msg.htmlContent }} // Render HTML safely
-        />
-      ) : (
-        <span  className={`p-2 max-w-xs text-xs rounded-lg ${
-          msg.sender === "user"
-            ? "bg-blue-500 text-white text-sm"
-            : "bg-gray-200 text-gray-800"
-        }`}>
-          {msg.text}</span> // Otherwise, render the plain text
-      )}
-                </div>
-              ))} */}
+            
      {messages.map((msg, index) => (
     <div
       key={index}
@@ -811,6 +813,7 @@ const displaycardcourse = () => {
           src={bull}
           alt="Bot"
           className="w-12 h-12 object-contain mr-2"
+          
         />
       )}
 
@@ -880,6 +883,8 @@ const displaycardcourse = () => {
                           ? "email"
                           : scenarios[currentScenario].inputType === "name"
                           ? "prenom"
+                          : scenarios[currentScenario].inputType === "qualification_project"
+                          ? "qualification_project"
                           : scenarios[currentScenario].inputType === "lastname"
                           ? 'nom'
                           : scenarios[currentScenario].inputType ===

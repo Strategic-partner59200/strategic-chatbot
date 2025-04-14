@@ -160,61 +160,116 @@ export const scenarios = {
       </div>
     ),
     options: [
-      { label: "Demande de renseignements 🔍", next: "demande" },
-      { label: "Etre rappeler 📞", next: "status" },
+      { label: "Demande de renseignements 🔍", next: "qualification_project" },
+      { label: "Être contacté par téléphone 📞", next: "nom" },
     ],
-    botResponse: "D'accord, allons-y ! 😊",
+    botResponse: "✨ Super ! ",
   },
-  demande: {
-    question: "Pouvez-vous préciser votre demande de renseignements ?",
+  // demande: {
+  //   question: "Pouvez-vous préciser votre demande de renseignements ?",
+  //   next: "qualification_project",
+  //   inputType: "qualification_project",
+  //   botResponse:
+  //     "Merci beaucoup ! C’est toujours passionnant de découvrir de nouveaux projets 😍"
+  // },
+  qualification_project: {
+    question: "Avant de vous proposer la meilleure solution, j’aimerais en savoir un peu plus sur votre projet. Pouvez-vous me décrire brièvement ce que vous cherchez à faire ? 💬",
+    inputType: "qualification_project",
+    next: "budget_estimation",
+    botResponse: "Merci beaucoup ! C’est toujours passionnant de découvrir de nouveaux projets 😍"
+  },
+  budget_estimation: {
+    question: "💰 Pour que je puisse vous orienter au mieux, avez-vous une idée du budget que vous envisagez ? (Pas de pression, c’est juste pour mieux vous guider)",
     options: [
-      { label: "Produits et services", next: "status" },
-      { label: "Support technique", next: "status" },
-      { label: "Tarifs", next: "status" },
-      { label: "Autre", next: "status" },
+      { label: "Moins de 1000€", next: "urgence_projet" },
+      { label: "Entre 1000€ et 5000€", next: "urgence_projet" },
+      { label: "Plus de 5000€", next: "urgence_projet" },
+      { label: "Je ne sais pas encore", next: "urgence_projet" }
+    ],
+    botResponse: "Merci pour votre transparence ! 😊"
+  },
   
-    ],
-    botResponse:
-      "Merci pour votre demande ! Pouvez-vous suivre les demandes suivantes pour que nous puissions vous contacter ? 😊"
-  },
-  status: {
-    question: "Pouvez-vous m'indiquer votre type d'utilisateur ? (e.g., Entreprise, Auto-entrepreneur, PME...)",
+  urgence_projet: {
+    question: "⏰ Pour qu’on s’organise au mieux : dans quel délai aimeriez-vous concrétiser ce projet ?",
     options: [
-      { label: "Auto entrepreneur", next: "prénom" },
-      { label: "PME", next: "prénom" },
-      { label: "Artisan", next: "prénom" },
-      { label: "Autre", next: "prénom" },
+      { label: "Le plus vite possible 🚀", next: "prise_rdv_direct" },
+      { label: "Dans les prochaines semaines 📅", next: "prise_rdv_direct" },
+      { label: "Je me renseigne pour l’instant 👀", next: "final_response" }
+    ],
+    botResponse: "Parfait, je m’adapte à votre rythme 🧘‍♂️"
+  },
+  
+  prise_rdv_direct: {
+    question: "🎯 Génial ! Si vous le souhaitez, vous pouvez prendre rendez-vous directement avec un membre de notre équipe. On pourra parler plus en détail de votre projet.",
+    options: [
+      { label: "Oui, je réserve mon créneau ! 📆", next: "rdv_link" },
+      { label: "Pas maintenant, merci 😊", next: "final_response" }
+    ],
+    botResponse: "Top ! Voici le lien pour réserver votre créneau 📅",
+  },
+  
+  // rdv_link: {
+  //   question: "Cliquez ici pour choisir le moment qui vous convient le mieux :",
+  //   botResponse: "👉 [Prendre rendez-vous](https://app.iclosed.io/e/Amar/rendez-vous)",
+  //   options: [],
+  //   next: "nom"
+  // },
+  rdv_link: {
+    question: "Cliquez au-desous pour choisir le moment qui vous convient le mieux ",
+    botResponse: "Parfait !",
+    options: [
+      {
+        label: "rendez-vous",  next: "final_response"
+      }
+    ],
+   
+  },
+  
+  
+  // status: {
+  //   question: "Pouvez-vous m'indiquer votre type d'utilisateur ? (e.g., Entreprise, Auto-entrepreneur, PME...)",
+  //   options: [
+  //     { label: "Auto entrepreneur", next: "nom" },
+  //     { label: "PME", next: "nom" },
+  //     { label: "Artisan", next: "nom" },
+  //     { label: "Autre", next: "nom" },
     
       
-    ],
-    botResponse: "Merci pour votre réponse ! 😊",
-  },
-  prénom: {
-    question: "Peux-tu me donner ton prenom, s’il te plaît ?",
-    botResponse: "D'accord, continuons !",
-    inputType: "lastname",
-    next: "nom",
-  },
+  //   ],
+  //   botResponse: "Merci pour votre réponse ! 😊",
+  // },
+  // prénom: {
+  //   question: "Peux-tu me donner ton prenom, s’il te plaît ?",
+  //   botResponse: "D'accord, continuons !",
+  //   inputType: "lastname",
+  //   next: "nom",
+  // },
     nom: {
-    question: "Peux-tu me donner ton nom, s’il te plaît ?",
+    question: "Pourriez-vous me communiquer votre prénom et votre nom, s’il vous plaît ",
     botResponse: (lastname) => `Merci, ${lastname} ! D'accord, continuons !`,
     inputType: "name",
     next: "email",
   },
+  nom_societé: {
+    question: "Pourriez-vous me communiquer le nom de votre société, s’il vous plaît ?",
+    botResponse: "D'accord, continuons !",
+    inputType: "lastname",
+    next: "nom",
+  },
 
   email: {
-    question: "S'il te plaît, entre ton email ci-dessous.",
+    question: "Entre votre email ci-dessous, s’il vous plaît ?",
     botResponse: "Merci pour l'information 📧",
     inputType: "email",
     next: "verification_email",
-    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
+    invalidResponse: ["Désolé, l'adresse e-mail que vous avez saisie ne semble pas valide."]
   },
   email1: { 
-    question: "Peux-tu me donner ton correct email, s’il te plaît ?",
+    question: "Pourriez-vous me communiquer votre correct email, s’il vous plaît  ?",
     botResponse: "Merci pour l'information 📧",
     inputType: "email",
     next: "request_phone",
-    invalidResponse: ["Désolé ! L'email que tu viens de rentrer ne semble pas être valide !."],
+    invalidResponse: ["Désolé, l'adresse e-mail que vous avez saisie ne semble pas valide."]
   },
   verification_email: {
     question: "Est-ce que l'email 📧 est correct ?",
@@ -234,16 +289,16 @@ export const scenarios = {
   },
   
   phone: {
-    question: 'S\'il te plaît, entre ton numéro de téléphone 📱 ci-dessous.',
-    botResponse: "Parfait!",
+    question: 'Entre ton numéro de téléphone 📱 ci-dessous, s’il vous plaît ?',
+    botResponse: "Hmmm D'accord!",
     inputType: "phone",
     next: "verification_phone",
-    invalidResponse: ["Désolé ! le numéro de téléphone que tu viens de rentrer ne semble pas être valide !."],
+    invalidResponse: ["Désolé, le numéro de téléphone que vous avez saisie ne semble pas valide."]
   },
  
 
   final_response: {
-    question: "Nous vous contacterons bientôt! Et Merci d'avoir pris le temps de discuter avec moi, À bientôt ! 😊",
+    question: "Merci beaucoup pour ces précieuses infos 🙏 On revient vers vous très vite ! N’hésitez pas à revenir vers moi si vous avez d’autres questions 💬",
     options: [],
     next: "",
       botResponse:
